@@ -24,6 +24,14 @@ if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
     die('Invalid URL.');
 }
 
+// Additional protection: Only allow HTTP(S) schemas to block file:// protocols
+$parsed_url = parse_url($url);
+$scheme = isset($parsed_url['scheme']) ? strtolower($parsed_url['scheme']) : '';
+if ($scheme !== 'http' && $scheme !== 'https') {
+    http_response_code(400);
+    die('Invalid URL scheme.');
+}
+
 // Validate the signature to prevent SSRF
 if (empty($signature) || !verify_download_signature($url, $signature)) {
     http_response_code(403);

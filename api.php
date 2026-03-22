@@ -74,9 +74,10 @@ function detect_platform($url) {
 
     $host = strtolower($parsed_url['host']);
 
-    if (strpos($host, 'tiktok.com') !== false || strpos($host, 'vt.tiktok.com') !== false) {
+    // Strict host validation
+    if ($host === 'tiktok.com' || str_ends_with($host, '.tiktok.com')) {
         return 'tiktok';
-    } elseif (strpos($host, 'instagram.com') !== false) {
+    } elseif ($host === 'instagram.com' || str_ends_with($host, '.instagram.com')) {
         return 'instagram';
     }
     return 'unknown';
@@ -182,6 +183,15 @@ function fetch_instagram_info($url) {
         }
         if (preg_match('/<meta property="og:title" content="([^"]+)"/i', $response, $matches)) {
             $title = html_entity_decode($matches[1]);
+        }
+    }
+
+    // Ensure extracted video URL is strictly HTTP/HTTPS
+    if ($video_url) {
+        $parsed_vid_url = parse_url($video_url);
+        $scheme = isset($parsed_vid_url['scheme']) ? strtolower($parsed_vid_url['scheme']) : '';
+        if ($scheme !== 'http' && $scheme !== 'https') {
+            $video_url = null; // Reject non-HTTP/S URLs like file://
         }
     }
 
