@@ -1,0 +1,7 @@
+[Sun Mar 22 17:42:57 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Sun Mar 22 17:43:01 2026] [::1]:52016 Accepted
+[Sun Mar 22 17:43:01 2026] [::1]:52016 [200]: HEAD /index.php
+[Sun Mar 22 17:43:01 2026] [::1]:52016 Closing
+[Sun Mar 22 17:43:06 2026] [::1]:59130 Accepted
+[Sun Mar 22 17:43:06 2026] [::1]:59130 [403]: POST /api.php
+[Sun Mar 22 17:43:06 2026] [::1]:59130 Closing
